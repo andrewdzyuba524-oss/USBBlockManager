@@ -1,0 +1,130 @@
+﻿<Window x:Class="USBBlockManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="USB Block Manager"
+        Height="560" Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+        <Style TargetType="ToggleButton">
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#FFD24A4A" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Обновить" Command="{Binding RefreshCommand}" />
+                <Separator />
+                <MenuItem Header="Удалить программу..." Click="UninstallMenu_OnClick" />
+                <Separator />
+                <MenuItem Header="Выход" Click="ExitMenu_OnClick" />
+            </MenuItem>
+            <MenuItem Header="Настройки">
+                <MenuItem Header="Сменить пароль..." Click="ChangePasswordMenu_OnClick" />
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <MenuItem Header="О программе..." Click="AboutMenu_OnClick" />
+            </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="{Binding BlockStatusText}" FontWeight="Bold" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Заблокировать USB"
+                            Command="{Binding BlockCommand}"
+                            Margin="0,0,6,0"
+                            Padding="10,2" />
+                    <Button Content="Разблокировать USB"
+                            Command="{Binding UnblockCommand}"
+                            Padding="10,2" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+
+        <TabControl Margin="6">
+
+            <TabItem Header="Устройства">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button Content="Обновить" Command="{Binding RefreshCommand}" />
+                        <Separator />
+                        <Button Content="Добавить в белый список"
+                                Command="{Binding AddToWhitelistCommand}" />
+                        <Separator />
+                        <Button Content="Применить белый список"
+                                Command="{Binding ApplyWhitelistCommand}" />
+                        <Separator />
+                        <ToggleButton Content="{Binding AddModeText}"
+                                      IsChecked="{Binding IsAddMode, Mode=OneWay}"
+                                      Command="{Binding ToggleAddModeCommand}"
+                                      Padding="10,2"
+                                      MinWidth="180"
+                                      ToolTip="Когда режим включён, новые USB-устройства не блокируются — их можно увидеть в списке и добавить в белый список." />
+                    </ToolBar>
+
+                    <DataGrid ItemsSource="{Binding Devices}"
+                              SelectedItem="{Binding SelectedDevice}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              GridLinesVisibility="Horizontal"
+                              HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="VID" Binding="{Binding Vid}" Width="80" />
+                            <DataGridTextColumn Header="PID" Binding="{Binding Pid}" Width="100" />
+                            <DataGridTextColumn Header="Серийный номер" Binding="{Binding Serial}" Width="200" />
+                            <DataGridTextColumn Header="Модель" Binding="{Binding Label}" Width="*" />
+                            <DataGridTextColumn Header="Буква" Binding="{Binding DriveLetter}" Width="70" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="Белый список">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button Content="Обновить" Command="{Binding RefreshCommand}" />
+                        <Separator />
+                        <Button Content="Удалить из белого списка"
+                                Command="{Binding RemoveFromWhitelistCommand}" />
+                    </ToolBar>
+
+                    <DataGrid ItemsSource="{Binding Whitelist}"
+                              SelectedItem="{Binding SelectedWhitelistEntry}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              GridLinesVisibility="Horizontal"
+                              HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="VID" Binding="{Binding Vid}" Width="80" />
+                            <DataGridTextColumn Header="PID" Binding="{Binding Pid}" Width="100" />
+                            <DataGridTextColumn Header="Серийный номер" Binding="{Binding Serial}" Width="200" />
+                            <DataGridTextColumn Header="Модель" Binding="{Binding Label}" Width="*" />
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="180" />
+                            <DataGridTextColumn Header="Добавил" Binding="{Binding AddedBy}" Width="100" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+        </TabControl>
+    </DockPanel>
+</Window>

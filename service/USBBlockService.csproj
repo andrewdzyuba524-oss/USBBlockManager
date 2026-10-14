@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>USBBlockService</RootNamespace>
+    <AssemblyName>USBBlockService</AssemblyName>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\USBBlockManager.Core\USBBlockManager.Core.csproj" />
+  </ItemGroup>
+
+  <Target Name="RemoveWpfStubsFromPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <WpfStubs Include="$(PublishDir)WindowsBase.dll;
+                          $(PublishDir)PresentationCore.dll;
+                          $(PublishDir)PresentationFramework.dll;
+                          $(PublishDir)PresentationFramework.Aero.dll;
+                          $(PublishDir)PresentationFramework.Aero2.dll;
+                          $(PublishDir)PresentationFramework.AeroLite.dll;
+                          $(PublishDir)PresentationFramework.Classic.dll;
+                          $(PublishDir)PresentationFramework.Luna.dll;
+                          $(PublishDir)PresentationFramework.Royale.dll;
+                          $(PublishDir)PresentationFramework-SystemCore.dll;
+                          $(PublishDir)PresentationFramework-SystemData.dll;
+                          $(PublishDir)PresentationFramework-SystemDrawing.dll;
+                          $(PublishDir)PresentationFramework-SystemXml.dll;
+                          $(PublishDir)PresentationFramework-SystemXmlLinq.dll;
+                          $(PublishDir)PresentationNative_cor3.dll;
+                          $(PublishDir)PresentationUI.dll;
+                          $(PublishDir)ReachFramework.dll;
+                          $(PublishDir)System.Printing.dll;
+                          $(PublishDir)System.Windows.Controls.Ribbon.dll;
+                          $(PublishDir)System.Windows.dll;
+                          $(PublishDir)System.Windows.Extensions.dll;
+                          $(PublishDir)System.Windows.Forms.dll;
+                          $(PublishDir)System.Windows.Forms.Design.dll;
+                          $(PublishDir)System.Windows.Forms.Design.Editors.dll;
+                          $(PublishDir)System.Windows.Forms.Primitives.dll;
+                          $(PublishDir)System.Windows.Input.Manipulations.dll;
+                          $(PublishDir)System.Windows.Presentation.dll;
+                          $(PublishDir)System.Xaml.dll;
+                          $(PublishDir)UIAutomationClient.dll;
+                          $(PublishDir)UIAutomationClientSideProviders.dll;
+                          $(PublishDir)UIAutomationProvider.dll;
+                          $(PublishDir)UIAutomationTypes.dll;
+                          $(PublishDir)WindowsFormsIntegration.dll;
+                          $(PublishDir)PenImc_cor3.dll;
+                          $(PublishDir)wpfgfx_cor3.dll;
+                          $(PublishDir)DirectWriteForwarder.dll;
+                          $(PublishDir)D3DCompiler_47_cor3.dll" />
+    </ItemGroup>
+    <Delete Files="@(WpfStubs)" ContinueOnError="true" />
+    <Message Text="Удалены WPF/WinForms-заглушки из service publish" Importance="high" />
+  </Target>
+
+</Project>

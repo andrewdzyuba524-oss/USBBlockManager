@@ -1,0 +1,70 @@
+<Window x:Class="USBBlockManager.Views.UsbApprovalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="USB Block Manager — новое устройство"
+        Height="500" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True"
+        Topmost="True">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Обнаружено новое USB-устройство"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Margin="0,0,0,12" />
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,12">
+            <TextBlock x:Name="DeviceLabelText" FontWeight="SemiBold" />
+            <TextBlock x:Name="DeviceVidPidText" Foreground="#666" />
+            <TextBlock x:Name="DeviceSerialText" Foreground="#666" />
+            <TextBlock x:Name="DeviceDriveText" Foreground="#666" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="2"
+                   Text="Устройство временно отключено. Введите пароль администратора, чтобы разрешить его."
+                   TextWrapping="Wrap"
+                   Foreground="#444"
+                   Margin="0,0,0,12" />
+
+        <StackPanel Grid.Row="3" Margin="0,0,0,12">
+            <CheckBox x:Name="AddToWhitelistCheck"
+                      Content="Разрешить и добавить в белый список"
+                      IsChecked="True"
+                      Margin="0,0,0,8" />
+            <TextBlock Text="Пароль администратора:" Margin="0,0,0,4" />
+            <PasswordBox x:Name="PasswordBox"
+                         PasswordChanged="PasswordBox_OnPasswordChanged"
+                         Height="26" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="4"
+                   x:Name="ErrorText"
+                   Foreground="Red"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Top" />
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="AllowButton"
+                    Content="Разрешить"
+                    Width="110" Height="30"
+                    Margin="0,0,8,0"
+                    IsDefault="True"
+                    Click="AllowButton_OnClick" />
+            <Button Content="Заблокировать"
+                    Width="120" Height="30"
+                    IsCancel="True"
+                    Click="BlockButton_OnClick" />
+        </StackPanel>
+    </Grid>
+</Window>

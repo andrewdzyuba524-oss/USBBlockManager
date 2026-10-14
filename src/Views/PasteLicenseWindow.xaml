@@ -1,0 +1,48 @@
+<Window x:Class="USBBlockManager.Views.PasteLicenseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Вставить лицензию"
+        Height="380" Width="520"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Вставьте текст лицензии (JSON):"
+                   Margin="0,0,0,8" />
+
+        <TextBox Grid.Row="1"
+                 x:Name="LicenseTextBox"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"
+                 FontFamily="Consolas"
+                 FontSize="11" />
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,12,0,0">
+            <Button Content="Вставить из буфера"
+                    Click="PasteFromClipboard_OnClick"
+                    Width="160" Height="30"
+                    Margin="0,0,8,0" />
+            <Button Content="OK"
+                    Click="Ok_OnClick"
+                    IsDefault="True"
+                    Width="100" Height="30"
+                    Margin="0,0,8,0" />
+            <Button Content="Отмена"
+                    IsCancel="True"
+                    Width="100" Height="30" />
+        </StackPanel>
+    </Grid>
+</Window>
